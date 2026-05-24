@@ -1,7 +1,7 @@
 # Maintainer: tunaflsh <tunaflish.ai@gmai.com>
 
-pkgname=mpv-vapoursynth-tensorrt-git
-pkgver=0.41.0.r604.gcfd818bcae
+pkgname=mpv-vapoursynth-seek-crash-git
+pkgver=0.41.0.r774.g2339eb7276
 pkgrel=1
 pkgdesc='A free, open source, and cross-platform media player (Git version, patched for VapourSynth stability)'
 arch=('x86_64')
