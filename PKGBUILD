@@ -9,7 +9,7 @@ license=('GPL-2.0-or-later')
 url='https://mpv.io/'
 depends=(
     'alsa-lib'
-    'ffmpeg-git'
+    'ffmpeg'
     'gcc-libs'
     'glibc'
     'hicolor-icon-theme'
