@@ -1,7 +1,7 @@
 # Maintainer: tunaflsh <tunaflish.ai@gmai.com>
 
 pkgname=mpv-vapoursynth-seek-crash-git
-pkgver=0.41.0.r774.g2339eb7276
+pkgver=0.41.0.r854.g7aa8580cab
 pkgrel=1
 pkgdesc='A free, open source, and cross-platform media player (Git version, patched for VapourSynth stability)'
 arch=('x86_64')
@@ -25,7 +25,7 @@ depends=(
     'libdrm'
     'libdvdnav'
     'libgl'
-    'libjpeg'
+    'libjpeg-turbo'
     'libpipewire'
     'libplacebo'
     'libpulse'
