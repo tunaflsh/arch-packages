@@ -21,9 +21,9 @@ sha256sums_aarch64=('b8a49c799a85a13df55bf5bb2c1c6dfdd21a7b0b5e24bed8df1bd9f928e
 
 package() {
 	cd "$srcdir/"
-	./xremap --completions zsh > zsh_completions
-	./xremap --completions fish > fish_completions
-	./xremap --completions bash > bash_completions
+	./xremap --completions zsh | sed "/'/! s/xremap/\0-socket/g" > zsh_completions
+	./xremap --completions fish | sed "s/xremap/\0-socket/g" > fish_completions
+	./xremap --completions bash | sed "s/xremap/\0-socket/" > bash_completions
 	install -Dm644 zsh_completions "${pkgdir}/usr/share/zsh/site-functions/_xremap-socket"
 	install -Dm644 fish_completions "${pkgdir}/usr/share/fish/vendor_completions.d/xremap-socket.fish"
 	install -Dm644 bash_completions "${pkgdir}/usr/share/bash-completion/completions/xremap-socket"
