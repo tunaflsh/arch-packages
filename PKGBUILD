@@ -4,7 +4,7 @@ pkgdesc='Dynamic key remapper for X11 and Wayland (Socket Version)'
 pkgver=0.15.9
 pkgrel=1
 
-provides=('xremap')
+provides=('xremap-socket')
 license=('MIT')
 url='https://github.com/xremap/xremap'
 arch=('x86_64' 'aarch64')
@@ -24,9 +24,9 @@ package() {
 	./xremap --completions zsh > zsh_completions
 	./xremap --completions fish > fish_completions
 	./xremap --completions bash > bash_completions
-	install -Dm644 zsh_completions "${pkgdir}/usr/share/zsh/site-functions/_xremap"
-	install -Dm644 fish_completions "${pkgdir}/usr/share/fish/vendor_completions.d/xremap.fish"
-	install -Dm644 bash_completions "${pkgdir}/usr/share/bash-completion/completions/xremap"
-	install -Dm755 xremap "${pkgdir}/usr/bin/xremap"
+	install -Dm644 zsh_completions "${pkgdir}/usr/share/zsh/site-functions/_xremap-socket"
+	install -Dm644 fish_completions "${pkgdir}/usr/share/fish/vendor_completions.d/xremap-socket.fish"
+	install -Dm644 bash_completions "${pkgdir}/usr/share/bash-completion/completions/xremap-socket"
+	install -Dm755 xremap "${pkgdir}/usr/bin/xremap-socket"
 	install -Dm644 "LICENSE-$pkgver" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
