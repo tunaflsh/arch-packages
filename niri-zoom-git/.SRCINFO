@@ -1,0 +1,16 @@
+pkgbase = niri-zoom-git
+	pkgdesc = External Ctrl+scroll magnifier/zoom tool for niri (Wayland)
+	pkgver = v0.1.0.r2.94f24aa
+	pkgrel = 1
+	url = https://github.com/Ahmedhossamdev/niri-zoom
+	arch = x86_64
+	license = MIT
+	makedepends = git
+	makedepends = cargo
+	depends = wayland
+	provides = niri-zoom
+	conflicts = niri-zoom
+	source = git+https://github.com/Ahmedhossamdev/niri-zoom
+	sha256sums = SKIP
+
+pkgname = niri-zoom-git

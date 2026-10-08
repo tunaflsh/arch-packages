@@ -1,0 +1,18 @@
+pkgbase = xremap-socket-bin
+	pkgdesc = Dynamic key remapper for X11 and Wayland (Socket Version)
+	pkgver = 0.15.9
+	pkgrel = 1
+	url = https://github.com/xremap/xremap
+	arch = x86_64
+	arch = aarch64
+	license = MIT
+	provides = xremap-socket
+	options = !debug
+	source = LICENSE-0.15.9::https://raw.githubusercontent.com/xremap/xremap/v0.15.9/LICENSE
+	sha256sums = 60365594c733128ba50f05de00c4a6f07fed0a6e8bbd93817f39ded3980f7343
+	source_x86_64 = xremap-socket-bin-0.15.9-x86_64.zip::https://github.com/xremap/xremap/releases/download/v0.15.9/xremap-linux-x86_64-socket.zip
+	sha256sums_x86_64 = 145f4115bc9fdfe4a2f5b7768f4112092d96ef019141542ea369a159d70c4392
+	source_aarch64 = xremap-socket-bin-0.15.9-aarch64.zip::https://github.com/xremap/xremap/releases/download/v0.15.9/xremap-linux-aarch64-socket.zip
+	sha256sums_aarch64 = b8a49c799a85a13df55bf5bb2c1c6dfdd21a7b0b5e24bed8df1bd9f928e7fe29
+
+pkgname = xremap-socket-bin
