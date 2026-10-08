@@ -2,6 +2,7 @@
 *.AppImage
 *.pkg.tar.*
 *.deb
+*.zip
 pkg/
 src/
-LICENSE
+LICENSE*
