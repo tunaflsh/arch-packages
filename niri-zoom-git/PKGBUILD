@@ -1,0 +1,36 @@
+# Maintainer: tunaflsh <tunaflish.ai@gmail.com>
+pkgname=niri-zoom-git
+pkgver=v0.1.0.r2.94f24aa
+pkgrel=1
+pkgdesc="External Ctrl+scroll magnifier/zoom tool for niri (Wayland)"
+arch=('x86_64')
+url="https://github.com/Ahmedhossamdev/niri-zoom"
+license=('MIT')
+groups=()
+depends=('wayland')
+makedepends=('git' 'cargo')
+provides=("${pkgname%-git}")
+conflicts=("${pkgname%-git}")
+replaces=()
+backup=()
+options=()
+install=
+source=('git+https://github.com/Ahmedhossamdev/niri-zoom')
+noextract=()
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "$srcdir/${pkgname%-git}"
+  printf "%s" "$(git describe --long --tags | sed 's/\([^-]*-\)g/r\1/;s/-/./g')"
+}
+
+build() {
+  cd "$srcdir/${pkgname%-git}"
+  cargo build --release
+}
+
+package() {
+  cd "$srcdir/${pkgname%-git}"
+  install -Dm755 -t "${pkgdir}/usr/bin/" target/release/${pkgname%-git}{ctl,d}
+  install -Dm644 LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}/"
+}
