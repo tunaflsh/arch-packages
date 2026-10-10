@@ -1,0 +1,14 @@
+pkgbase = uefi-rom-extract-git
+	pkgdesc = UEFI Video Card ROM Extractor
+	pkgver = v1.0.0.r1.a368a0f
+	pkgrel = 1
+	url = https://github.com/ccharon/UEFIRomExtract
+	arch = x86_64
+	makedepends = git
+	makedepends = cmake
+	provides = uefi-rom-extract
+	conflicts = uefi-rom-extract
+	source = git+https://github.com/ccharon/UEFIRomExtract
+	sha256sums = SKIP
+
+pkgname = uefi-rom-extract-git
