@@ -1,0 +1,15 @@
+pkgbase = edk2-basetools-c-git
+	pkgdesc = EDK2 C BaseTools
+	pkgver = 202608.r397.870158586f
+	pkgrel = 1
+	url = https://github.com/tianocore/edk2
+	arch = x86_64
+	license = BSD-2-Clause-Patent
+	license = MIT
+	makedepends = git
+	provides = edk2-basetools-c
+	conflicts = edk2-basetools-c
+	source = git+https://github.com/tianocore/edk2
+	sha256sums = SKIP
+
+pkgname = edk2-basetools-c-git

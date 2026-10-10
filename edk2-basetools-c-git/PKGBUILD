@@ -1,0 +1,39 @@
+# Maintainer: tunaflsh <tunaflish@gmail.com>
+pkgname=edk2-basetools-c-git
+pkgver=202608.r397.870158586f
+pkgrel=1
+pkgdesc="EDK2 C BaseTools"
+arch=('x86_64')
+url="https://github.com/tianocore/edk2"
+license=('BSD-2-Clause-Patent' 'MIT')
+groups=()
+depends=()
+makedepends=('git')
+provides=("${pkgname%-git}")
+conflicts=("${pkgname%-git}")
+replaces=()
+backup=()
+options=()
+install=
+source=('git+https://github.com/tianocore/edk2')
+noextract=()
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "$srcdir/edk2"
+  printf "%s" "$(git describe --long --tags | sed 's/edk2-stable//;s/\([^-]*-\)g/r\1/;s/-/./g')"
+}
+
+build() {
+  cd "$srcdir/edk2/BaseTools/Source/C"
+  git submodule update --init
+  make
+}
+
+package() {
+  cd "$srcdir/edk2"
+  install -Dm644 License.txt -t "${pkgdir}/usr/share/licenses/${pkgname}/"
+  cd "BaseTools/Source/C"
+  install -Dm755 -t "${pkgdir}/usr/bin/" bin/*
+  install -Dm644 BrotliCompress/brotli/LICENSE -t "${pkgdir}/usr/share/licenses/${pkgname}/brotli/"
+}
