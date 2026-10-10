@@ -1,7 +1,1 @@
-# makepkg artifacts
-*.AppImage
-*.pkg.tar.*
-*.deb
-pkg/
-src/
-LICENSE
+mpv-vapoursynth-seek-fix/
