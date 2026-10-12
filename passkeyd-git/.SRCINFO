@@ -1,0 +1,25 @@
+pkgbase = passkeyd-git
+	pkgdesc = A WebAuthn authenticator
+	pkgver = v1.9.3.r0.8cba5ee
+	pkgrel = 1
+	url = https://github.com/tunaflsh/passkeyd
+	install = passkeyd.install
+	arch = x86_64
+	license = GPL3
+	makedepends = git
+	makedepends = cargo
+	depends = tpm2-tss
+	depends = systemd
+	depends = libxcrypt
+	depends = libxcrypt-compat
+	provides = passkeyd
+	conflicts = passkeyd
+	conflicts = openrc
+	conflicts = runit
+	options = !lto
+	backup = etc/passkeyd.conf
+	backup = usr/share/passkeyd/theme.conf
+	source = git+https://github.com/tunaflsh/passkeyd
+	sha256sums = SKIP
+
+pkgname = passkeyd-git
