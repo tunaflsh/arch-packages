@@ -1,0 +1,18 @@
+pkgbase = wtype-git
+	pkgdesc = xdotool type for wayland (fixed keycodes)
+	pkgver = 0.4.r1.g99e8e15
+	pkgrel = 1
+	url = https://github.com/tijszwinkels/wtype
+	arch = x86_64
+	license = MIT
+	makedepends = git
+	makedepends = meson
+	makedepends = jq
+	depends = wayland
+	depends = libxkbcommon
+	provides = wtype
+	conflicts = wtype
+	source = git+https://github.com/tijszwinkels/wtype#branch=fix/printable-keycodes
+	sha256sums = SKIP
+
+pkgname = wtype-git
