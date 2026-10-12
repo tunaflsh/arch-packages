@@ -1,6 +1,6 @@
 # Maintainer: tunaflsh <tunaflish.ai@gmail.com>
 pkgname=passkeyd-git
-pkgver=v1.9.3.r0.8cba5ee
+pkgver=v1.9.3.r3.d82eae4
 pkgrel=1
 pkgdesc="A WebAuthn authenticator"
 arch=('x86_64')
