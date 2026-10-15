@@ -1,8 +1,8 @@
 pkgbase = passkeyd-git
 	pkgdesc = A WebAuthn authenticator
-	pkgver = v1.9.3.r3.d82eae4
+	pkgver = v1.9.3.r0.4a1ce88
 	pkgrel = 1
-	url = https://github.com/tunaflsh/passkeyd
+	url = https://github.com/bjn7/passkeyd
 	install = passkeyd.install
 	arch = x86_64
 	license = GPL3
@@ -19,7 +19,7 @@ pkgbase = passkeyd-git
 	options = !lto
 	backup = etc/passkeyd.conf
 	backup = usr/share/passkeyd/theme.conf
-	source = git+https://github.com/tunaflsh/passkeyd
+	source = git+https://github.com/bjn7/passkeyd
 	sha256sums = SKIP
 
 pkgname = passkeyd-git
