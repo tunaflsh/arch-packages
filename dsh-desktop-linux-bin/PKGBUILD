@@ -1,4 +1,5 @@
 # Maintainer: lingdianshiren <ldsrwu@foxmail.com>
+# Contributor: tunaflsh <tunaflish.ai@gmail.com>
 #
 # 预构建包:直接取 ffyfox/dsh-desktop-linux 的 Linux 产物(deb)重新封装,本包不构建任何东西。
 # 上游 deepseek-ai/deepseek-harness 只发布 macOS/Windows 桌面版(apps/desktop/README.md:232
@@ -50,9 +51,11 @@ _artprefix="/opt/DeepSeek Harness"
 _pkgprefix="/opt/$pkgname"
 
 source=("$pkgname-$pkgver.tar.gz::https://github.com/ffyfox/dsh-desktop-linux/releases/download/$_debrel/$_debname"
-        'LICENSE')
+        'LICENSE'
+        'desktop-focus-window.patch')
 sha256sums=('bb31196fab76a18b5a2d2ed1c043627d34efbf9bae94b47afb244af2aa625cf9'
-            'ebb4f09972aee8608be255debaf78451a68e95c290f55c240dec2ecfa16ea6be')
+            'ebb4f09972aee8608be255debaf78451a68e95c290f55c240dec2ecfa16ea6be'
+            '2003f7143ea0735e734eaee6aee590e76b86c5af9475409a6f5419b83311cea3')
 
 package() {
   cd "$srcdir"
@@ -61,6 +64,9 @@ package() {
   # 已经在这里。只解它:载荷才是要安装的内容;control.tar.xz 是产物自己的 Debian 元数据,本包
   # 不复用(它的 .desktop 与 AppArmor profile 在下面处理,postinst 逻辑落在 .install 文件里)。
   bsdtar -xf data.tar.xz
+
+  # Focus the DSH window when a notification is clicked.
+  patch -Np1 -d "opt/DeepSeek Harness" -i "$srcdir/desktop-focus-window.patch" || return 1
 
   install -d "$pkgdir$_pkgprefix"
   cp -a "opt/DeepSeek Harness/." "$pkgdir$_pkgprefix/"
