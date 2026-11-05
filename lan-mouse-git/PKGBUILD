@@ -15,6 +15,7 @@ conflicts=("$_pkgname")
 source=("$_pkgname"::"git+https://github.com/tunaflsh/$_pkgname.git")
 sha256sums=('SKIP')
 depends=(libadwaita gtk4 libx11 libxtst glib2 glibc gcc-libs hicolor-icon-theme)
+optdepends=('firewalld: for the provided firewalld service definition')
 makedepends=(git cargo rust desktop-file-utils)
 options=('!lto')
 
@@ -48,7 +49,6 @@ package() {
 
   install -Dm0644 -t "$pkgdir/usr/share/icons/hicolor/scalable/apps" "$_pkgname-gtk/resources/de.feschber.LanMouse.svg"
   install -Dm0755 -t "$pkgdir/usr/bin/" "target/release/$_pkgname"
-  install -Dm0644 -t "$pkgdir/usr/share/licenses/$_pkgname" LICENSE
   install -Dm0644 -t "$pkgdir/usr/lib/systemd/user/" "service/$_pkgname.service"
   install -Dm0644 -t "$pkgdir/usr/lib/firewalld/services/" "firewall/$_pkgname.xml"
 }
