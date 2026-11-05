@@ -46,7 +46,9 @@ package() {
 
   desktop-file-install -m 644 --dir "$pkgdir/usr/share/applications/" "de.feschber.LanMouse.desktop"
 
-  install -Dm0644 -t "$pkgdir/usr/share/icons/hicolor/scalable/apps" "lan-mouse-gtk/resources/de.feschber.LanMouse.svg"
+  install -Dm0644 -t "$pkgdir/usr/share/icons/hicolor/scalable/apps" "$_pkgname-gtk/resources/de.feschber.LanMouse.svg"
   install -Dm0755 -t "$pkgdir/usr/bin/" "target/release/$_pkgname"
   install -Dm0644 -t "$pkgdir/usr/share/licenses/$_pkgname" LICENSE
+  install -Dm0644 -t "$pkgdir/usr/lib/systemd/user/" "service/$_pkgname.service"
+  install -Dm0644 -t "$pkgdir/usr/lib/firewalld/services/" "firewall/$_pkgname.xml"
 }
