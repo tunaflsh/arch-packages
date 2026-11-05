@@ -1,0 +1,3 @@
+[submodule "lan-mouse"]
+	path = lan-mouse
+	url = https://gitlab.archlinux.org/tunaflsh/lan-mouse.git
