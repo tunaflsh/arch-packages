@@ -1,6 +1,6 @@
 post_install() {
     echo ""
-    echo "==> cua-driver ${pkgver} installed"
+    echo "==> cua-driver ${1} installed (git build)"
     echo "    Binary: /usr/bin/cua-driver (real: /usr/lib/cua-driver/cua-driver)"
     echo ""
     echo "==> Enable the desktop control daemon:"
@@ -14,6 +14,6 @@ post_install() {
 
 post_upgrade() {
     echo ""
-    echo "==> cua-driver upgraded to ${pkgver}"
+    echo "==> cua-driver upgraded to ${1} (git build)"
     echo "    Restart the daemon: systemctl --user restart cua-driver"
 }
