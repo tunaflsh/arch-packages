@@ -1,13 +1,16 @@
 pkgbase = passkeyd-git
 	pkgdesc = A WebAuthn authenticator
 	pkgver = v1.9.3.r0.4a1ce88
-	pkgrel = 1
+	pkgrel = 2
 	url = https://github.com/bjn7/passkeyd
 	install = passkeyd.install
 	arch = x86_64
 	license = GPL3
 	makedepends = git
 	makedepends = cargo
+	makedepends = gtk4
+	makedepends = qt6-base
+	makedepends = qt6-declarative
 	depends = tpm2-tss
 	depends = systemd
 	depends = libxcrypt

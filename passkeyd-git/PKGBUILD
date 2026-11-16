@@ -1,14 +1,16 @@
 # Maintainer: tunaflsh <tunaflish.ai@gmail.com>
 pkgname=passkeyd-git
 pkgver=v1.9.3.r0.4a1ce88
-pkgrel=1
+pkgrel=2
 pkgdesc="A WebAuthn authenticator"
 arch=('x86_64')
 license=('GPL3')
 groups=()
 depends=("tpm2-tss" "systemd" 'libxcrypt' 'libxcrypt-compat')
 conflicts=("${pkgname%-git}" "openrc" "runit")
-makedepends=('git' 'cargo')
+# The GTK UI needs gtk4 headers, the KDE UI needs Qt6 + Qml/Quick headers
+# (cxx-qt and qt-build-utils locate Qt through qmake6/qtpaths6).
+makedepends=('git' 'cargo' 'gtk4' 'qt6-base' 'qt6-declarative')
 provides=("${pkgname%-git}")
 replaces=()
 url="https://github.com/bjn7/passkeyd"
@@ -24,9 +26,71 @@ pkgver() {
   printf "%s" "$(git describe --long --tags | sed 's/\([^-]*-\)g/r\1/;s/-/./g')"
 }
 
+# Cargo ignores MAKEFLAGS and defaults to one job per logical CPU, but each
+# rustc peaks at ~2 GiB on this workspace, so that default exhausts RAM on
+# smaller machines and takes the build (and its terminal) down with it.
+# Size the job count from the machine instead of hardcoding it.
+
+# Memory ceiling in MiB: the cgroup limit when the build is confined
+# (container, or `systemd-run --scope -p MemoryMax=...`), else installed RAM.
+_mem_ceiling_mib() {
+  local rel lim
+  rel=$(sed -n 's/^0:://p' /proc/self/cgroup)
+  lim=$(cat "/sys/fs/cgroup${rel}/memory.max" 2>/dev/null)
+  if [[ $lim =~ ^[0-9]+$ ]]; then
+    printf '%d' $(( lim / 1048576 ))
+  else
+    awk '/^MemTotal:/ {printf "%d", $2 / 1024}' /proc/meminfo
+  fi
+}
+
+# Parallel job count. Precedence:
+#   1. CARGO_BUILD_JOBS, if already set (explicit user/makepkg override);
+#   2. otherwise min(nproc, 60% of the memory ceiling / 2 GiB per job);
+#   3. clipped to an explicit -jN from makepkg's MAKEFLAGS, if present.
+_cargo_jobs() {
+  local jobs ceiling_mib per_job_mib=2048 make_jobs=""
+
+  if [[ -n ${CARGO_BUILD_JOBS:-} ]]; then
+    printf '%s' "$CARGO_BUILD_JOBS"
+    return
+  fi
+
+  jobs=$(nproc)
+  ceiling_mib=$(_mem_ceiling_mib)
+
+  # One job per 2 GiB, using at most 60% of the ceiling so the desktop
+  # survives the build.
+  if (( jobs > ceiling_mib * 6 / 10 / per_job_mib )); then
+    jobs=$(( ceiling_mib * 6 / 10 / per_job_mib ))
+  fi
+  if (( jobs < 1 )); then
+    jobs=1
+  fi
+
+  if [[ ${MAKEFLAGS:-} =~ (^|[[:space:]])-j[[:space:]]*([0-9]+) ]]; then
+    make_jobs=${BASH_REMATCH[2]}
+  fi
+  if [[ -n $make_jobs ]] && (( make_jobs < jobs )); then
+    jobs=$make_jobs
+  fi
+
+  printf '%s' "$jobs"
+}
+
 build() {
   cd "$srcdir/${pkgname%-git}"
-  cargo build --release
+
+  local jobs
+  jobs=$(_cargo_jobs)
+  msg2 "Building with %s parallel job(s) (%s MiB memory ceiling)" "$jobs" "$(_mem_ceiling_mib)"
+
+  # cxx-qt's build scripts shell out to the C++ toolchain as well, so keep
+  # those in step with rustc instead of letting them use every core.
+  CARGO_BUILD_JOBS="$jobs" \
+    CMAKE_BUILD_PARALLEL_LEVEL="$jobs" \
+    NUM_JOBS="$jobs" \
+    cargo build --release
 }
 
 package() {
