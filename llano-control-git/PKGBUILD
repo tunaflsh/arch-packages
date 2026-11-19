@@ -1,0 +1,63 @@
+# Maintainer: tunaflsh <tunaflish.ai@gmail.com>
+# Built from upstream git and linked against the distribution's Python, GTK
+# and tray libraries. Unlike llano-control-bin, no private runtime is bundled.
+
+pkgname=llano-control-git
+pkgver=0.8.7.r0.gabacfc1
+pkgrel=1
+pkgdesc='Native GTK4 fan and RGB controller for the Llano V12 Ultra cooler'
+arch=('any')
+url='https://github.com/tal0nmallorca/llano-control'
+license=('MIT')
+depends=('python' 'python-gobject' 'python-cairo' 'gtk4' 'libayatana-appindicator' 'hicolor-icon-theme')
+optdepends=('nvidia-utils: NVIDIA GPU temperature and load telemetry')
+provides=('llano-control')
+conflicts=('llano-control' 'llano-control-bin')
+install="$pkgname.install"
+makedepends=('git')
+checkdepends=('python-yaml')
+
+source=("$pkgname::git+$url.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "$pkgname"
+  git describe --long --tags --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+check() {
+  cd "$pkgname"
+  python -m compileall -q llano_control
+  python -m unittest discover -s tests
+  python -m llano_control self-test
+}
+
+package() {
+  cd "$pkgname"
+
+  local pysite
+  pysite=$(python -c 'import sysconfig; print(sysconfig.get_path("purelib"))')
+  install -d "$pkgdir$pysite"
+  cp -r llano_control "$pkgdir$pysite/"
+  find "$pkgdir$pysite/llano_control" -type d -name __pycache__ -prune -exec rm -rf {} +
+  python -m compileall -q -s "$pkgdir" -p / "$pkgdir$pysite/llano_control"
+
+  install -d "$pkgdir/usr/bin"
+  cat >"$pkgdir/usr/bin/llano-control" <<'EOF'
+#!/bin/sh
+exec /usr/bin/python3 -m llano_control "$@"
+EOF
+  chmod 755 "$pkgdir/usr/bin/llano-control"
+
+  install -Dm644 packaging/appimage/io.github.llanocontrol.App.desktop \
+    "$pkgdir/usr/share/applications/io.github.llanocontrol.App.desktop"
+  install -Dm644 packaging/appimage/llano-control.svg \
+    "$pkgdir/usr/share/icons/hicolor/scalable/apps/llano-control.svg"
+
+  # Grants the active seat user write access to this device only (374a:b101).
+  install -Dm644 packaging/70-llano-control.rules.example \
+    "$pkgdir/usr/lib/udev/rules.d/70-llano-control.rules"
+
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 NOTICE.md "$pkgdir/usr/share/licenses/$pkgname/NOTICE.md"
+}

@@ -1,0 +1,24 @@
+pkgbase = llano-control-git
+	pkgdesc = Native GTK4 fan and RGB controller for the Llano V12 Ultra cooler
+	pkgver = 0.8.7.r0.gabacfc1
+	pkgrel = 1
+	url = https://github.com/tal0nmallorca/llano-control
+	install = llano-control-git.install
+	arch = any
+	license = MIT
+	checkdepends = python-yaml
+	makedepends = git
+	depends = python
+	depends = python-gobject
+	depends = python-cairo
+	depends = gtk4
+	depends = libayatana-appindicator
+	depends = hicolor-icon-theme
+	optdepends = nvidia-utils: NVIDIA GPU temperature and load telemetry
+	provides = llano-control
+	conflicts = llano-control
+	conflicts = llano-control-bin
+	source = llano-control-git::git+https://github.com/tal0nmallorca/llano-control.git
+	sha256sums = SKIP
+
+pkgname = llano-control-git

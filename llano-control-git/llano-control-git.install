@@ -1,0 +1,11 @@
+post_install() {
+  if command -v udevadm >/dev/null 2>&1; then
+    udevadm control --reload-rules || true
+    udevadm trigger --subsystem-match=hidraw || true
+  fi
+  printf '%s\n' "Llano Control: if the cooler is already connected, unplug and replug its USB cable so the new udev rule applies."
+}
+
+post_upgrade() {
+  post_install
+}
