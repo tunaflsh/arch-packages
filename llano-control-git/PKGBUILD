@@ -3,11 +3,11 @@
 # and tray libraries. Unlike llano-control-bin, no private runtime is bundled.
 
 pkgname=llano-control-git
-pkgver=0.8.7.r0.gabacfc1
+pkgver=0.8.7.r2.g8cbcdcf
 pkgrel=1
 pkgdesc='Native GTK4 fan and RGB controller for the Llano V12 Ultra cooler'
 arch=('any')
-url='https://github.com/tal0nmallorca/llano-control'
+url='https://github.com/tunaflsh/llano-control'
 license=('MIT')
 depends=('python' 'python-gobject' 'python-cairo' 'gtk4' 'libayatana-appindicator' 'hicolor-icon-theme')
 optdepends=('nvidia-utils: NVIDIA GPU temperature and load telemetry')
