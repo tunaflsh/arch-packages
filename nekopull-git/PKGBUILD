@@ -1,0 +1,51 @@
+# Maintainer: tunaflsh <tunaflish.ai@gmail.com>
+
+pkgname=nekopull-git
+_pkgname=nekopull
+pkgver=0.1.0.r0.g3aec088d42
+pkgrel=1
+pkgdesc='Poll nekoBT by media id and hand new episodes to Transmission'
+arch=('any')
+url='https://github.com/tunaflsh/nekopull'
+license=('MIT')
+depends=('python>=3.11')
+optdepends=('libsecret: keep the API key and client credentials in the Secret Service')
+makedepends=('git' 'python-build' 'python-installer' 'python-setuptools' 'python-wheel')
+provides=("$_pkgname")
+conflicts=("$_pkgname")
+install="${pkgname}.install"
+source=("$_pkgname::git+$url.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "$_pkgname"
+  local _desc _ver
+  if _desc=$(git describe --abbrev=10 --long --tags --match 'v*' 2>/dev/null); then
+    printf '%s' "$_desc" | sed 's/^v//; s/^\([^-]*\)-\([0-9]*\)-g/\1.r\2.g/'
+    return
+  fi
+  _ver=$(sed -n 's/^version = "\(.*\)"$/\1/p' pyproject.toml | head -n1)
+  printf '%s.r%s.g%s' "$_ver" "$(git rev-list --count HEAD)" "$(git rev-parse --short=10 HEAD)"
+}
+
+build() {
+  cd "$_pkgname"
+  python -m build --wheel --no-isolation
+}
+
+check() {
+  cd "$_pkgname"
+  python -m unittest discover -s tests -v
+}
+
+package() {
+  cd "$_pkgname"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  # The README shipped in the wheel points at /usr/share/doc/nekopull/, so keep
+  # the upstream name here rather than the -git one.
+  install -Dm644 config.example.toml "$pkgdir/usr/share/doc/$_pkgname/config.example.toml"
+  install -Dm644 systemd/nekopull.service "$pkgdir/usr/lib/systemd/user/nekopull.service"
+  install -Dm644 systemd/nekopull.timer "$pkgdir/usr/lib/systemd/user/nekopull.timer"
+}

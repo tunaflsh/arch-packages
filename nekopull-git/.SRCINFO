@@ -1,0 +1,21 @@
+pkgbase = nekopull-git
+	pkgdesc = Poll nekoBT by media id and hand new episodes to Transmission
+	pkgver = 0.1.0.r0.g3aec088d42
+	pkgrel = 1
+	url = https://github.com/tunaflsh/nekopull
+	install = nekopull-git.install
+	arch = any
+	license = MIT
+	makedepends = git
+	makedepends = python-build
+	makedepends = python-installer
+	makedepends = python-setuptools
+	makedepends = python-wheel
+	depends = python>=3.11
+	optdepends = libsecret: keep the API key and client credentials in the Secret Service
+	provides = nekopull
+	conflicts = nekopull
+	source = nekopull::git+https://github.com/tunaflsh/nekopull.git
+	sha256sums = SKIP
+
+pkgname = nekopull-git
