@@ -2,7 +2,7 @@
 
 pkgname=nekopull-git
 _pkgname=nekopull
-pkgver=0.1.0.r0.g3aec088d42
+pkgver=0.2.0.r0.gd8cd6350bd
 pkgrel=1
 pkgdesc='Poll nekoBT by media id and hand new episodes to Transmission'
 arch=('any')
@@ -26,6 +26,14 @@ pkgver() {
   fi
   _ver=$(sed -n 's/^version = "\(.*\)"$/\1/p' pyproject.toml | head -n1)
   printf '%s.r%s.g%s' "$_ver" "$(git rev-list --count HEAD)" "$(git rev-parse --short=10 HEAD)"
+}
+
+prepare() {
+  # The checkout is kept between builds (paru's KeepSrc), so dist/ would
+  # otherwise still hold the previous version's wheel and the dist/*.whl glob
+  # would match more than one. The Python package guidelines prescribe this
+  # for VCS packages; it keeps the clone, so updates stay incremental.
+  git -C "$srcdir/$_pkgname" clean -dfx
 }
 
 build() {
