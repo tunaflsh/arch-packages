@@ -2,7 +2,7 @@
 
 pkgname=nekopull-git
 _pkgname=nekopull
-pkgver=0.2.0.r0.gd8cd6350bd
+pkgver=0.3.0.r0.geba8b2e9f3
 pkgrel=1
 pkgdesc='Poll nekoBT by media id and hand new episodes to Transmission'
 arch=('any')
@@ -55,5 +55,4 @@ package() {
   # the upstream name here rather than the -git one.
   install -Dm644 config.example.toml "$pkgdir/usr/share/doc/$_pkgname/config.example.toml"
   install -Dm644 systemd/nekopull.service "$pkgdir/usr/lib/systemd/user/nekopull.service"
-  install -Dm644 systemd/nekopull.timer "$pkgdir/usr/lib/systemd/user/nekopull.timer"
 }
