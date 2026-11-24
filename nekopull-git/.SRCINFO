@@ -1,7 +1,7 @@
 pkgbase = nekopull-git
 	pkgdesc = Poll nekoBT by media id and hand new episodes to Transmission
-	pkgver = 0.3.0.r0.geba8b2e9f3
-	pkgrel = 1
+	pkgver = 0.3.1.r0.g77806fcb9f
+	pkgrel = 2
 	url = https://github.com/tunaflsh/nekopull
 	install = nekopull-git.install
 	arch = any

@@ -2,8 +2,8 @@
 
 pkgname=nekopull-git
 _pkgname=nekopull
-pkgver=0.3.0.r0.geba8b2e9f3
-pkgrel=1
+pkgver=0.3.1.r0.g77806fcb9f
+pkgrel=2
 pkgdesc='Poll nekoBT by media id and hand new episodes to Transmission'
 arch=('any')
 url='https://github.com/tunaflsh/nekopull'
